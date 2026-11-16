@@ -4,3 +4,7 @@
 node_modules/
 .openai/
 __pycache__/
+.dev.vars*
+.env*
+.wrangler/
+artifacts/
