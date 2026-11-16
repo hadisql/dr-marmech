@@ -8,7 +8,7 @@ Site vitrine français / arabe du cabinet à Casablanca, avec les photographies 
 - Hébergement : Cloudflare Pages, projet Direct Upload `drmarmech`.
 - GitHub Pages reste désactivé ; ne pas republier `gh-pages`.
 
-Le site utilise HTML, CSS et JavaScript. Il ne nécessite aucun VPS, base de données, API Google ni service payant pour les avis. Les dépendances Node servent uniquement aux vérifications et à la publication. Les images et les polices système sont locales ; les avis ne chargent aucune ressource Google avant l’ouverture d’un lien externe.
+Le site utilise HTML, CSS et JavaScript. Il ne nécessite aucun VPS, base de données, API Google ni service payant pour les avis. Les dépendances Node servent uniquement aux vérifications et à la publication. Les images et les polices système sont locales. Les avis sont intégrés aux sources ; la carte de localisation est un cadre Google Maps chargé à proximité de son affichage, sans clé API ni compte de facturation Google. Elle pointe sur la fiche exacte du cabinet et s’affiche en français ou en arabe selon la page.
 
 ## Prévisualiser
 
@@ -48,7 +48,7 @@ Pour ajouter un avis, renseigner :
 - `publishedLabel` et `publishedLabelAr` : indication relative au moment du relevé. Utiliser `publishTime` uniquement si la date exacte est connue.
 - `selectedOn` : date de consultation de la sélection, au format `YYYY-MM-DD`.
 
-Le carrousel conserve l’ordre des entrées. Il montre deux cartes sur ordinateur et une sur mobile, sans défilement automatique, avec commandes tactiles et clavier. Les avis inférieurs à quatre étoiles sont exclus. Le filtre et la date de relevé sont visibles ; aucune note globale ni compteur Google n’est figé. En arabe, le texte français original reste accessible. Sans JavaScript, le lien vers tous les avis reste utilisable.
+Le carrousel conserve l’ordre des entrées. Il montre deux cartes sur ordinateur et une sur mobile, sans défilement automatique, avec commandes tactiles et clavier. Les avis inférieurs à quatre étoiles sont exclus. La date du relevé reste dans les sources ; aucune note globale ni compteur Google n’est figé. Les indications de sélection et de maintenance ne sont pas affichées dans le carrousel. En arabe, le texte français original reste accessible. Sans JavaScript, le lien vers tous les avis reste utilisable.
 
 Les avis ne se synchronisent pas : une nouvelle sélection demande une modification du fichier, puis une publication validée. Les données synthétiques des tests sont hors de `dist/` et ne sont jamais publiées.
 

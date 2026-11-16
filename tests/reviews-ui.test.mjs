@@ -19,7 +19,6 @@ for (const ar of [false, true]) test(`${ar ? 'Arabic' : 'French'} static carouse
   assert.equal(root.querySelector('[data-reviews-controls]').hidden, false);
   assert.equal(root.querySelector('.maps-attribution').textContent, 'Google Maps');
   assert.equal(root.querySelector('[data-review-prev]').disabled, true);
-  assert.ok(root.querySelector('[data-reviews-selected]').textContent.length);
   const event = new window.Event('keydown', {bubbles: true});
   event.key = ar ? 'ArrowLeft' : 'ArrowRight';
   root.querySelector('[data-reviews-track]').dispatchEvent(event);

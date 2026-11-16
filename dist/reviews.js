@@ -3,14 +3,14 @@ import reviewsData from './reviews-data.js';
 const COPY = {
   fr: {
     empty: 'Découvrez les avis des patients sur la fiche Google Maps du cabinet.',
-    selected: date => `Sélection relevée le ${date} · Mise à jour manuelle`, stars: n => `${n} étoiles sur 5`,
+    stars: n => `${n} étoiles sur 5`,
     read: 'Lire la suite', less: 'Réduire', source: 'Voir cet avis sur Google Maps',
     original: 'Voir le texte original', translated: 'Afficher la traduction', translation: 'Traduction du site — extrait original disponible',
     position: (i, n) => `Avis ${i} sur ${n}`, demo: 'Prévisualisation : avis fictifs, non publiés',
   },
   ar: {
     empty: 'اطّلعوا على آراء المرضى على صفحة العيادة في Google Maps.',
-    selected: date => `اختيار جُمِع بتاريخ ${date} · يُحدّث يدوياً`, stars: n => `${n} نجوم من 5`,
+    stars: n => `${n} نجوم من 5`,
     read: 'قراءة المزيد', less: 'عرض أقل', source: 'عرض هذا الرأي على Google Maps',
     original: 'عرض النص الأصلي', translated: 'عرض الترجمة', translation: 'ترجمة الموقع — المقتطف الأصلي متاح',
     position: (i, n) => `الرأي ${i} من ${n}`, demo: 'معاينة: آراء افتراضية غير منشورة',
@@ -142,10 +142,6 @@ export function mountReviews(root, {data = reviewsData} = {}) {
   status.hidden = Boolean(reviews.length);
   track.hidden = !reviews.length;
   controls.hidden = reviews.length < 2;
-  if (/^\d{4}-\d{2}-\d{2}$/.test(data.selectedOn || '')) {
-    const date = new Date(`${data.selectedOn}T12:00:00Z`);
-    if (Number.isFinite(date.getTime())) find('[data-reviews-selected]').textContent = t.selected(new Intl.DateTimeFormat(locale, {day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC'}).format(date));
-  }
   if (data.demo === true) { const demo = find('[data-review-demo]'); demo.hidden = false; demo.textContent = t.demo; }
   updatePosition();
   return {count: reviews.length};
