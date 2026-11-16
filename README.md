@@ -5,7 +5,7 @@ Site vitrine bilingue français / arabe, avec les photographies et le logo fourn
 - Site : https://drmarmech.pages.dev/
 - Version arabe : https://drmarmech.pages.dev/ar.html
 - Hébergement : Cloudflare Pages, projet `drmarmech`, publication par import direct.
-- GitHub Pages : publication à désactiver ; ne pas republier la branche `gh-pages`.
+- GitHub Pages : désactivé (source « None ») ; ne pas republier la branche `gh-pages`.
 - Source : branche `main`, fichiers du site dans `dist/`.
 
 Le site utilise uniquement HTML, CSS et JavaScript, sans dépendance à installer, compilation, VPS, base de données, formulaire patient ni suivi publicitaire. Les photos et les polices système sont locales.
@@ -54,3 +54,5 @@ Le dépôt GitHub sert à conserver les sources. GitHub Pages ne doit plus servi
 Le portrait n’apparaît qu’une fois en ouverture. La photo au bloc accompagne la présentation du médecin ; les cinq vues intérieures composent la galerie ; la façade sert de repère près de l’adresse. Les images peuvent être agrandies et disposent de légendes et de textes alternatifs dans les deux langues.
 
 Les coordonnées, le nom arabe et les pratiques proviennent des éléments fournis. Aucun diplôme ni témoignage n’a été ajouté. La galerie, la navigation et les versions française et arabe ont été vérifiées dans le navigateur sur ordinateur et mobile. Les photos ne sont pas retournées en mode arabe.
+
+La racine de l’ancien domaine GitHub Pages et l’ancienne adresse du projet répondent désormais HTTP 404. Aucun dépôt du compte ne publiait de site Pages lors de la vérification de migration.
