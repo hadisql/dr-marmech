@@ -151,6 +151,8 @@ TRANSLATIONS = {
     'Éditeur du site': 'مسؤول الموقع',
     'Dr Marmech Ilias — Résidence Al Manzah, GH1 n°46, 1er étage, appartement n°2, boulevard Abdelkader Sahraoui, Casablanca. Téléphone : 05 21 44 44 30 / 06 63 84 98 48. E-mail : dr.marmech@outlook.com.': 'الدكتور مرمش إلياس — إقامة المنزه، GH1 رقم 46، الطابق الأول، الشقة رقم 2، شارع عبد القادر الصحراوي، الدار البيضاء. الهاتف: 05 21 44 44 30 / 06 63 84 98 48. البريد الإلكتروني: dr.marmech@outlook.com.',
     'Hébergement': 'استضافة الموقع',
+    'Ce site est hébergé par Cloudflare Pages, un service de Cloudflare, Inc.': 'تتم استضافة هذا الموقع عبر Cloudflare Pages، وهي خدمة تقدمها Cloudflare, Inc.',
+    'Politique de confidentialité de Cloudflare': 'سياسة الخصوصية لدى Cloudflare',
     'Ce site est hébergé par GitHub Pages, un service de GitHub, Inc.': 'تتم استضافة هذا الموقع عبر GitHub Pages، وهي خدمة تقدمها GitHub, Inc.',
     'Politique de confidentialité de GitHub': 'سياسة الخصوصية لدى GitHub',
     'Les coordonnées de l’hébergeur devront être renseignées lors du choix de l’hébergement définitif.': 'ستُضاف بيانات مزوّد الاستضافة عند اختيار الاستضافة النهائية للموقع.',

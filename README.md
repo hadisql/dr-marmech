@@ -2,9 +2,10 @@
 
 Site vitrine bilingue français / arabe, avec les photographies et le logo fournis pour le cabinet à Casablanca.
 
-- Site : https://hadisql.github.io/dr-marmech/
-- Version arabe : https://hadisql.github.io/dr-marmech/ar.html
-- Hébergement : GitHub Pages, branche `gh-pages`, dossier racine.
+- Site : https://drmarmech.pages.dev/
+- Version arabe : https://drmarmech.pages.dev/ar.html
+- Hébergement : Cloudflare Pages, projet `drmarmech`, publication par import direct.
+- GitHub Pages : publication à désactiver ; ne pas republier la branche `gh-pages`.
 - Source : branche `main`, fichiers du site dans `dist/`.
 
 Le site utilise uniquement HTML, CSS et JavaScript, sans dépendance à installer, compilation, VPS, base de données, formulaire patient ni suivi publicitaire. Les photos et les polices système sont locales.
@@ -42,11 +43,11 @@ node --check dist/config.js
 git add README.md dist tools .gitignore
 git commit -m "Mettre à jour le site"
 git push origin main
-pages_commit=$(git subtree split --prefix dist main)
-git push origin "$pages_commit":gh-pages
 ```
 
-GitHub Pages publie automatiquement les fichiers de la branche `gh-pages`. Le dossier `dist/` reste aussi déployable sur n’importe quel hébergeur statique ; ses chemins relatifs prennent en charge le sous-dossier du projet GitHub Pages.
+Dans Cloudflare : ouvrir **Workers & Pages → drmarmech → Create deployment**, choisir la production, puis déposer le contenu du dossier `dist/` ou un ZIP contenant directement `index.html` à sa racine. Le projet utilise Direct Upload : un simple push GitHub ne le redéploie pas automatiquement.
+
+Le dépôt GitHub sert à conserver les sources. GitHub Pages ne doit plus servir le site ; ne pas envoyer de nouvelle version vers `gh-pages`.
 
 ## Photographies et vérifications
 
