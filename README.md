@@ -1,58 +1,63 @@
 # Dr Marmech Ilias — Cabinet d’ophtalmologie
 
-Site vitrine bilingue français / arabe, avec les photographies et le logo fournis pour le cabinet à Casablanca.
+Site vitrine français / arabe du cabinet à Casablanca, avec les photographies et le logo fournis.
 
 - Site : https://drmarmech.pages.dev/
-- Version arabe : https://drmarmech.pages.dev/ar.html
-- Hébergement : Cloudflare Pages, projet `drmarmech`, publication par import direct.
-- GitHub Pages : désactivé (source « None ») ; ne pas republier la branche `gh-pages`.
-- Source : branche `main`, fichiers du site dans `dist/`.
+- Arabe : https://drmarmech.pages.dev/ar.html
+- Sources : https://github.com/hadisql/dr-marmech, branche `main` ; fichiers publiés dans `dist/`.
+- Hébergement : Cloudflare Pages, projet Direct Upload `drmarmech`.
+- GitHub Pages reste désactivé ; ne pas republier `gh-pages`.
 
-Le site utilise uniquement HTML, CSS et JavaScript, sans dépendance à installer, compilation, VPS, base de données, formulaire patient ni suivi publicitaire. Les photos et les polices système sont locales.
+Le site utilise HTML, CSS et JavaScript. Il ne nécessite aucun VPS, base de données, API Google ni service payant pour les avis. Les dépendances Node servent uniquement aux vérifications et à la publication. Les images et les polices système sont locales. Les avis sont intégrés aux sources ; la carte de localisation est un cadre Google Maps chargé à proximité de son affichage, sans clé API ni compte de facturation Google. Elle pointe sur la fiche exacte du cabinet et s’affiche en français ou en arabe selon la page.
 
-## Consulter et modifier le site
-
-Ouvrir `dist/index.html` ou lancer depuis ce dossier :
+## Prévisualiser
 
 ```sh
-python3 -m http.server 4173 --directory dist
+python3 -m http.server 4173 --bind 0.0.0.0 --directory dist
 ```
 
-Puis ouvrir http://localhost:4173.
+Ouvrir http://localhost:4173 ; depuis le mobile connecté au même Tailscale, http://100.64.0.4:4173 si le pare-feu autorise Python.
 
-`dist/config.js` regroupe le nom, la présentation, l’adresse, les deux téléphones, l’e-mail, les horaires et les liens externes. Les champs terminés par `Ar` contiennent leur version arabe. Les horaires sont volontairement indiqués comme restant à confirmer auprès du cabinet.
-
-Les coordonnées de la carte de visite sont conservées. La photo de façade comporte d’autres numéros ; ils n’ont pas été repris dans les liens d’appel, conformément au choix du commanditaire.
-
-## Maintenir la traduction arabe
-
-1. Modifier le contenu français dans `dist/index.html`.
-2. Adapter les traductions dans `tools/generate-ar.py`.
-3. Lancer `python3 tools/generate-ar.py` : le script reconstruit `dist/ar.html` et signale tout texte non traduit.
-
-Le sélecteur de langue conserve la section visitée. La page arabe utilise `lang="ar"` et `dir="rtl"`, avec une mise en page adaptée, tout en conservant le sens de lecture des numéros et de l’e-mail.
-
-## Publier une mise à jour
-
-Après modification des sources sur `main` :
+Pour les vérifications :
 
 ```sh
-python3 tools/generate-ar.py
-node --check dist/app.js
-node --check dist/config.js
-git add README.md dist tools .gitignore
-git commit -m "Mettre à jour le site"
-git push origin main
+npm ci
+npm run build
 ```
 
-Dans Cloudflare : ouvrir **Workers & Pages → drmarmech → Create deployment**, choisir la production, puis déposer le contenu du dossier `dist/` ou un ZIP contenant directement `index.html` à sa racine. Le projet utilise Direct Upload : un simple push GitHub ne le redéploie pas automatiquement.
+Le build reconstruit la version arabe, vérifie les références locales et exécute les tests du carrousel en français et en arabe. Il ne publie rien.
 
-Le dépôt GitHub sert à conserver les sources. GitHub Pages ne doit plus servir le site ; ne pas envoyer de nouvelle version vers `gh-pages`.
+## Modifier les informations
 
-## Photographies et vérifications
+`dist/config.js` regroupe l’identité, la présentation, l’adresse, les téléphones, l’e-mail, les horaires et les liens Maps / WhatsApp. Les champs terminés par `Ar` sont en arabe.
 
-Le portrait n’apparaît qu’une fois en ouverture. La photo au bloc accompagne la présentation du médecin ; les cinq vues intérieures composent la galerie ; la façade sert de repère près de l’adresse. Les images peuvent être agrandies et disposent de légendes et de textes alternatifs dans les deux langues.
+Les coordonnées de la carte de visite sont conservées. La façade affiche d’autres numéros, non repris à la demande du commanditaire. Les horaires et le lien WhatsApp proviennent de la fiche Maps consultée le 16 novembre 2026 ; les horaires des jours fériés restent à confirmer. Aucun diplôme ni qualification supplémentaire n’est déduit de Google Maps. La présentation est rédigée à partir des informations confirmées ; le descriptif professionnel complet de la fiche n’a pas été accessible.
 
-Les coordonnées, le nom arabe et les pratiques proviennent des éléments fournis. Aucun diplôme ni témoignage n’a été ajouté. La galerie, la navigation et les versions française et arabe ont été vérifiées dans le navigateur sur ordinateur et mobile. Les photos ne sont pas retournées en mode arabe.
+Après modification du français dans `dist/index.html`, adapter `tools/generate-ar.py` et lancer `npm run build`. Le générateur signale tout texte ou libellé accessible non traduit. La page arabe utilise `lang="ar"`, `dir="rtl"` et conserve les coordonnées numériques de gauche à droite.
 
-La racine de l’ancien domaine GitHub Pages et l’ancienne adresse du projet répondent désormais HTTP 404. Aucun dépôt du compte ne publiait de site Pages lors de la vérification de migration.
+## Mettre à jour les avis
+
+`dist/reviews-data.js` contient la sélection manuelle, la date du relevé et les textes originaux, avec traduction arabe facultative. Les avis, notes et liens ont été fournis par le commanditaire le 16 novembre 2026. Quatre avis distincts ont été retenus ; le texte attribué à fati fleur elhalouani était identique à celui de Salim dans le relevé fourni et n’a pas été repris deux fois.
+
+Pour ajouter un avis, renseigner :
+
+- `author.name` : nom public, à conserver tel qu’affiché ; `author.profileUrl` est facultatif.
+- `rating` : note vérifiée de 4 ou 5 étoiles.
+- `text` : extrait original, sans modification du sens ; `textAr` : traduction du site, signalée comme telle.
+- `sourceUrl` : lien individuel de partage Google Maps.
+- `publishedLabel` et `publishedLabelAr` : indication relative au moment du relevé. Utiliser `publishTime` uniquement si la date exacte est connue.
+- `selectedOn` : date de consultation de la sélection, au format `YYYY-MM-DD`.
+
+Le carrousel conserve l’ordre des entrées. Il montre deux cartes sur ordinateur et une sur mobile, sans défilement automatique, avec commandes tactiles et clavier. Les avis inférieurs à quatre étoiles sont exclus. La date du relevé reste dans les sources ; aucune note globale ni compteur Google n’est figé. Les indications de sélection et de maintenance ne sont pas affichées dans le carrousel. En arabe, le texte français original reste accessible. Sans JavaScript, le lien vers tous les avis reste utilisable.
+
+Les avis ne se synchronisent pas : une nouvelle sélection demande une modification du fichier, puis une publication validée. Les données synthétiques des tests sont hors de `dist/` et ne sont jamais publiées.
+
+## Publication automatique après validation
+
+Le workflow `.github/workflows/deploy.yml` vérifie chaque pull request et chaque push sur `main`. La publication Cloudflare ne peut partir que de `main`, après validation de `hadisql` dans l’environnement protégé `production`. Le déploiement publie automatiquement `dist/` avec Wrangler, sans ZIP.
+
+La configuration initiale du jeton Cloudflare est décrite dans [docs/cloudflare-github.md](docs/cloudflare-github.md). Aucun secret ne doit apparaître dans les fichiers versionnés. Les protections de l’environnement GitHub sont configurées à distance et doivent être conservées.
+
+## Photographies
+
+Le portrait n’apparaît qu’une fois en ouverture. La photo au bloc accompagne le médecin ; cinq vues intérieures composent la galerie ; la façade sert de repère près de l’adresse. Les images peuvent être agrandies, avec légendes et textes alternatifs bilingues. Aucun avis ni photo de profil n’est récupéré automatiquement depuis Google.

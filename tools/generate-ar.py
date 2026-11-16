@@ -5,6 +5,33 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TRANSLATIONS = {
+    'Le cabinet sur la carte': 'موقع العيادة على الخريطة',
+    'Afficher le cabinet sur Google Maps': 'عرض موقع العيادة على Google Maps',
+    'Localisation du cabinet du Dr Marmech Ilias à Casablanca sur Google Maps': 'موقع عيادة الدكتور مرمش إلياس بالدار البيضاء على Google Maps',
+    'Politique de confidentialité de Google': 'سياسة الخصوصية لدى Google',
+    'Ce site ne comporte aucun formulaire de collecte de données, aucun outil de suivi publicitaire et ne dépose aucun cookie applicatif. La carte intégrée est fournie par Google Maps : son chargement peut transmettre des données techniques à Google et permettre l’utilisation de cookies selon vos réglages Google. Les liens externes vous conduisent vers des services qui appliquent leurs propres règles de confidentialité. L’hébergeur peut traiter des journaux techniques de connexion.': 'لا يتضمن هذا الموقع أي استمارة لجمع البيانات أو أداة للتتبع الإعلاني، ولا يضع ملفات تعريف ارتباط خاصة بالتطبيق. الخريطة المضمّنة مقدّمة من Google Maps؛ وقد يؤدي تحميلها إلى إرسال بيانات تقنية إلى Google واستخدام ملفات تعريف ارتباط بحسب إعداداتكم لدى Google. تنقلكم الروابط الخارجية إلى خدمات تطبّق سياسات الخصوصية الخاصة بها. وقد يعالج مزوّد الاستضافة سجلات تقنية للاتصال.',
+    'Les extraits d’avis présentés constituent une sélection manuelle de témoignages notés quatre ou cinq étoiles, conservée sur ce site. Ils ne représentent ni l’ensemble des avis ni une mise à jour en temps réel. Les traductions réalisées pour ce site sont signalées et le texte original reste accessible. Les avis sont intégrés directement au site. La carte Google Maps est un contenu externe, soumis à la politique de confidentialité de Google.': 'مقتطفات الآراء المعروضة هي اختيار يدوي من شهادات بتقييم أربع أو خمس نجوم، محفوظة على هذا الموقع. وهي لا تمثّل جميع الآراء ولا تُحدّث بشكل فوري. يُشار إلى الترجمات المنجزة لهذا الموقع ويبقى النص الأصلي متاحاً. الآراء مضمّنة مباشرة في الموقع. أما خريطة Google Maps فهي محتوى خارجي يخضع لسياسة الخصوصية لدى Google.',
+    'Découvrez les avis des patients sur la fiche Google Maps du cabinet.': 'اطّلعوا على آراء المرضى على صفحة العيادة في Google Maps.',
+    'Résidence Al Manzah, GH1 n°46, 1er étage, appartement n°2, boulevard Abdelkader Sahraoui — Casablanca 20660': 'إقامة المنزه، GH1 رقم 46، الطابق الأول، الشقة رقم 2، شارع عبد القادر الصحراوي — الدار البيضاء 20660',
+
+    'Le Dr Marmech Ilias vous accueille dans son cabinet d’ophtalmologie, au sein de la résidence Al Manzah à Casablanca.': 'يستقبلكم الدكتور مرمش إلياس في عيادته لطب العيون بإقامة المنزه بالدار البيضاء.',
+    'LES AVIS GOOGLE': 'الآراء على GOOGLE',
+    'Les mots': 'تجارب',
+    'des patients.': 'المرضى.',
+    'Une sélection d’avis publiés sur Google Maps, pour découvrir l’expérience partagée par les patients.': 'آراء مختارة منشورة على Google Maps للاطّلاع على التجارب التي يشاركها المرضى.',
+    'Google Maps': 'Google Maps',
+    'Voir tous les avis': 'عرض جميع الآراء',
+    'Sélection d’avis Google': 'آراء مختارة من Google',
+    'Avis précédent': 'الرأي السابق',
+    'Avis suivant': 'الرأي التالي',
+    'Voir sur Google Maps': 'عرض على Google Maps',
+    'Rendez-vous par WhatsApp': 'حجز موعد عبر WhatsApp',
+    'Lundi – vendredi': 'الاثنين – الجمعة',
+    'Samedi': 'السبت',
+    'Dimanche': 'الأحد',
+    'Fermé': 'مغلق',
+    'Jours fériés : horaires à confirmer.': 'يُرجى تأكيد أوقات العمل خلال أيام العطل.',
+    'Avis Google Maps': 'الآراء على Google Maps',
     'Le médecin au bloc opératoire': 'الطبيب في غرفة العمليات',
     'Le Dr Marmech Ilias au microscope au bloc opératoire': 'الدكتور مرمش إلياس يستخدم المجهر في غرفة العمليات',
     'AU BLOC OPÉRATOIRE': 'في غرفة العمليات',
@@ -182,11 +209,13 @@ class ArabicPage(HTMLParser):
     def handle_starttag(self, tag, attrs):
         original = self.get_starttag_text()
         for key, value in attrs:
-            if value and (key in ('alt', 'aria-label', 'data-caption') or key == 'content' and value in TRANSLATIONS):
+            if value and (key in ('alt', 'aria-label', 'data-caption', 'title') or key == 'content' and value in TRANSLATIONS):
                 original = original.replace('"' + escape(value, quote=True) + '"', '"' + escape(self.translate(value), quote=True) + '"')
                 original = original.replace('"' + value + '"', '"' + escape(self.translate(value), quote=True) + '"')
         if tag == 'html':
             original = original.replace('lang="fr"', 'lang="ar" dir="rtl"')
+        if tag == 'iframe' and 'data-cabinet-map' in dict(attrs):
+            original = original.replace('hl=fr', 'hl=ar')
         if tag == 'link' and dict(attrs).get('rel') == 'canonical':
             value = dict(attrs)['href']
             original = original.replace(value, value + 'ar.html')

@@ -63,7 +63,7 @@
     $('#hours').replaceChildren();
     hours.forEach(({day, time}) => {
       const p = document.createElement('p'); p.className = 'hour-row';
-      for (const t of [day, time]) { const span = document.createElement('span'); span.textContent = t; p.append(span); }
+      for (const [i, t] of [day, time].entries()) { const span = document.createElement('span'); span.textContent = t; if (i === 1 && /\d/.test(t)) span.dir = 'ltr'; p.append(span); }
       $('#hours').append(p);
     });
   }
